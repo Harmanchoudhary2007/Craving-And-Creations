@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craving & Creation | Complete Recipe Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      background: url("https://png.pngtree.com/thumb_back/fh260/background/20240411/pngtree-food-mockup-recipe-concept-image_15654332.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #1e2a2e;
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 248, 235, 0.85);
+      z-index: -1;
+      backdrop-filter: blur(3px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 30px;
+      position: sticky;
+      top: 0;
+      background: rgba(40, 20, 10, 0.96);
+      z-index: 1000;
+      flex-wrap: wrap;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .brand {
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #ffb347, #ff7e5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 40px;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      background: #ff7e5f;
+      transform: translateY(-2px);
+    }
+
+    .active-nav {
+      background: #ff7e5f;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background: rgba(40, 20, 10, 0.96);
+      min-width: 140px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .dropdown-content button {
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      width: 100%;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .dropdown-content button:hover {
+      background: #ff7e5f;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Search Bar Styles */
+    .search-container {
+      display: flex;
+      gap: 5px;
+      margin-left: 10px;
+    }
+
+    .search-input {
+      padding: 6px 12px;
+      border-radius: 40px;
+      border: none;
+      font-size: 0.85rem;
+      width: 180px;
+      font-family: inherit;
+      outline: none;
+      background: rgba(255,255,255,0.9);
+      transition: all 0.3s;
+    }
+
+    .search-input:focus {
+      width: 220px;
+      background: white;
+      box-shadow: 0 0 10px rgba(255,126,95,0.5);
+    }
+
+    .search-btn {
+      background: #ff7e5f;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .search-btn:hover {
+      background: #e05a36;
+      transform: scale(1.02);
+    }
+
+    .clear-search {
+      background: #7f8c8d;
+    }
+
+    .clear-search:hover {
+      background: #5a6268;
+    }
+
+    /* Page System */
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero-box {
+      background: rgba(0, 0, 0, 0.55);
+      display: inline-block;
+      padding: 30px 45px;
+      border-radius: 50px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-title {
+      font-size: 50px;
+      background: linear-gradient(90deg, #ff7e5f, #ffb347, #ffd194);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      color: #fff3e0;
+      font-size: 1.2rem;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+
+    .section-heading h1 {
+      font-size: 2.5rem;
+      background: rgba(40, 20, 10, 0.85);
+      display: inline-block;
+      padding: 0.2em 1em;
+      border-radius: 60px;
+      color: #ffefcf;
+    }
+
+    .category-heading {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+
+    .category-heading h2 {
+      font-size: 2rem;
+      color: #c53a1f;
+      display: inline-block;
+      border-bottom: 4px solid #ff7e5f;
+      padding-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 25px;
+    }
+
+    /* CARD STYLES - NO SCROLLBARS BUT CONTENT VISIBLE */
+    .card {
+      perspective: 1000px;
+      width: 280px;
+      height: 400px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-style: preserve-3d;
+      border-radius: 20px;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      background: #fffef7;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .card-front::-webkit-scrollbar,
+    .card-back::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: #ffffffea;
+      padding: 18px;
+      border: 1px solid #ffd9b5;
+    }
+
+    .card-back h3 {
+      color: #c53a1f;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #ffb98a;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .ingredients {
+      margin: 10px 0;
+      padding-left: 18px;
+    }
+
+    .ingredients li {
+      margin: 4px 0;
+      font-size: 0.8rem;
+    }
+
+    .steps {
+      font-size: 0.75rem;
+      line-height: 1.4;
+      background: #fef3e8;
+      padding: 8px;
+      border-radius: 12px;
+    }
+
+    .fav-btn {
+      background: #ff7e5f;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 0.8rem;
+    }
+
+    .form-box {
+      max-width: 550px;
+      margin: 20px auto;
+      background: rgba(255, 250, 240, 0.96);
+      padding: 25px;
+      border-radius: 35px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .form-box input, .form-box textarea {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 60px;
+      border: 1px solid #ffb77c;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .form-box textarea {
+      border-radius: 25px;
+      resize: vertical;
+    }
+
+    button {
+      background: #ff7e5f;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 8px 6px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #e05a36;
+      transform: scale(0.97);
+    }
+
+    .clear-btn {
+      background: #7f8c8d;
+    }
+    .clear-btn:hover {
+      background: #5a6268;
+    }
+
+    .review-card {
+      background: rgba(255, 248, 235, 0.98);
+      width: 260px;
+      padding: 16px;
+      border-radius: 28px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
+    .filter-badge {
+      background: #feca57;
+      padding: 5px 14px;
+      border-radius: 40px;
+      margin: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .info-message {
+      text-align: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: rgba(255,235,205,0.8);
+      border-radius: 40px;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #f5e1c0;
+      font-size: 0.9rem;
+    }
+
+    /* Search Results Highlight */
+    .search-results-section {
+      display: none;
+    }
+
+    .search-results-section.active {
+      display: block;
+    }
+
+    /* About Page Styles */
+    .about-container {
+      max-width:400px;
+      margin:60px auto;
+      padding: 30px;
+      background: rgba(255, 250, 240, 0.95);
+      border-radius: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .team-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-card h3 {
+      color: #c53a1f;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .info-row {
+      margin: 12px 0;
+      padding: 8px;
+      background: rgba(255, 230, 200, 0.3);
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #c53a1f;
+      display: inline-block;
+      width: 100px;
+    }
+
+    .info-value {
+      color: #333;
+    }
+
+    @media (max-width: 1000px) {
+      .hero-title { font-size: 38px; }
+      .section-heading h1 { font-size: 1.8rem; }
+      .category-heading h2 { font-size: 1.5rem; }
+      nav { flex-direction: column; align-items: center; }
+      .nav-links { justify-content: center; }
+      .nav-btn { font-size: 0.75rem; padding: 5px 10px; }
+      .search-container { margin-top: 8px; }
+      .search-input { width: 150px; }
+      .team-card { width: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">🍜 Craving & Creation</div>
+  <div class="nav-links">
+    <button class="nav-btn active-nav" onclick="switchPage('home')">🏠 Home</button>
+    
+    <!-- Dropdown for Categories -->
+    <div class="dropdown">
+      <button class="nav-btn" style="background: none;">📂 Categories ▼</button>
+      <div class="dropdown-content">
+        <button onclick="switchPage('indian')">🇮🇳 Indian</button>
+        <button onclick="switchPage('fast')">🍔 Fast Food</button>
+        <button onclick="switchPage('dessert')">🍰 Desserts</button>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="switchPage('favorites')">❤️ Favorites</button>
+    <button class="nav-btn" onclick="switchPage('add')">➕ Add Recipe</button>
+    <button class="nav-btn" onclick="switchPage('find')">🔍 Find by Ingredient</button>
+    <button class="nav-btn" onclick="switchPage('review')">⭐ Reviews</button>
+    <button class="nav-btn" onclick="switchPage('about')">📖 About Us</button>
+    
+    <!-- Search Bar in Navbar -->
+    <div class="search-container">
+      <input type="text" id="navSearchInput" class="search-input" placeholder="🔎 Search recipe..." onkeyup="if(event.key==='Enter') searchRecipes()">
+      <button class="search-btn" onclick="searchRecipes()">🔍 Search</button>
+      <button class="clear-search" onclick="clearSearch()">✖</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE (ALL CONTENT) ==================== -->
+<div id="home-page" class="page active-page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">Craving & Creation</h1>
+      <p class="hero-sub">Flip cards • Discover recipes • Create magic ✨</p>
+    </div>
+  </div>
+
+  <!-- All Recipes -->
+  <div class="section-heading"><h1>📖 All Recipes</h1></div>
+  <div id="allRecipesHome" class="container"></div>
+
+  <!-- Indian -->
+  <div class="category-heading"><h2>🥗🇮🇳 Indian Specialties</h2></div>
+  <div id="indianContainer" class="container"></div>
+
+  <!-- Fast Food -->
+  <div class="category-heading"><h2>🍔 Fast Food Favorites</h2></div>
+  <div id="fastContainer" class="container"></div>
+
+  <!-- Desserts -->
+  <div class="category-heading"><h2>🍰 Dessert Delights</h2></div>
+  <div id="dessertContainer" class="container"></div>
+
+  <!-- Favorites -->
+  <div class="category-heading"><h2>❤️ Your Favorites</h2></div>
+  <div id="homeFavContainer" class="container"></div>
+
+  <!-- Add Recipe -->
+  <div class="category-heading"><h2>➕ Add Your Own Recipe</h2></div>
+  <div class="form-box">
+    <input type="text" id="recipeName" placeholder="📝 Recipe name">
+    <input type="text" id="recipeCategory" placeholder="📂 Category (Indian / Fast Food / Dessert)">
+    <input type="text" id="recipeIngredients" placeholder="🥕 Ingredients (comma separated)">
+    <input type="text" id="recipeImage" placeholder="🖼️ Image URL (optional)">
+    <input type="text" id="recipeSteps" placeholder="👨‍🍳 Cooking steps">
+    <button onclick="addNewRecipe()">➕ Add to Collection</button>
+    <button class="clear-btn" onclick="clearAddForm()">🗑️ Clear</button>
+  </div>
+
+  <!-- Find by Ingredients -->
+  <div class="category-heading"><h2>🔍 Find by Ingredients</h2></div>
+  <div class="form-box">
+    <input type="text" id="ingredientSearch" placeholder="🔎 e.g., cheese, paneer, chicken">
+    <button onclick="addIngredientFilter()">➕ Add Ingredient</button>
+    <button class="clear-btn" onclick="clearAllFilters()">🗑️ Clear Filters</button>
+    <div id="activeFiltersGlobal" style="margin-top: 12px;"></div>
+  </div>
+  <div id="ingredientResultsGlobal" class="container"></div>
+
+  <!-- Reviews -->
+  <div class="category-heading"><h2>⭐ Foodie Reviews</h2></div>
+  <div class="form-box">
+    <input type="text" id="reviewerName" placeholder="👤 Your name">
+    <textarea id="reviewComment" rows="3" placeholder="💬 Share your experience..."></textarea>
+    <button onclick="addReview()">📝 Submit Review</button>
+  </div>
+  <div id="reviewsListGlobal" class="container"></div>
+</div>
+
+<!-- ==================== INDIAN PAGE ==================== -->
+<div id="indian-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">🇮🇳 Indian Specialties</h1>
+      <p class="hero-sub">Explore authentic Indian cuisine</p>
+    </div>
+  </div>
+  <div id="indianDetailedContainer" class="container"></div>
+  <div class="info-message"><p>✨ From rich curries to tandoori delights — explore the soul of India ✨</p></div>
+</div>
+
+<!-- ==================== FAST FOOD PAGE ==================== -->
+<div id="fast-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">🍔 Fast Food Favorites</h1>
+      <p class="hero-sub">Quick, delicious, and satisfying</p>
+    </div>
+  </div>
+  <div id="fastDetailedContainer" class="container"></div>
+  <div class="info-message"><p>🔥 Juicy burgers, crispy fries & cheesy pizzas — quick cravings solved 🔥</p></div>
+</div>
+
+<!-- ==================== DESSERT PAGE ==================== -->
+<div id="dessert-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">🍰 Decadent Desserts</h1>
+      <p class="hero-sub">Sweet endings for every meal</p>
+    </div>
+  </div>
+  <div id="dessertDetailedContainer" class="container"></div>
+  <div class="info-message"><p>🍫 Sweet endings: brownies, ice creams, gulab jamun & more</p></div>
+</div>
+
+<!-- ==================== FAVORITES PAGE ==================== -->
+<div id="favorites-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">❤️ Your Favorites</h1>
+      <p class="hero-sub">Your personally saved recipes</p>
+    </div>
+  </div>
+  <div id="favPageContainer" class="container"></div>
+  <div class="info-message"><p>💖 Your favorite recipes appear here. Click "Add to Fav" on any recipe to save it!</p></div>
+</div>
+
+<!-- ==================== ADD RECIPE PAGE ==================== -->
+<div id="add-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">➕ Add Your Recipe</h1>
+      <p class="hero-sub">Share your culinary creation with the world</p>
+    </div>
+  </div>
+  <div class="form-box">
+    <input type="text" id="recipeNameAdd" placeholder="📝 Recipe name">
+    <input type="text" id="recipeCategoryAdd" placeholder="📂 Category (Indian / Fast Food / Dessert)">
+    <input type="text" id="recipeIngredientsAdd" placeholder="🥕 Ingredients (comma separated)">
+    <input type="text" id="recipeImageAdd" placeholder="🖼️ Image URL (optional)">
+    <input type="text" id="recipeStepsAdd" placeholder="👨‍🍳 Cooking steps">
+    <button onclick="addNewRecipeFromPage()">➕ Add to Collection</button>
+    <button class="clear-btn" onclick="clearAddFormPage()">🗑️ Clear</button>
+  </div>
+</div>
+
+<!-- ==================== FIND BY INGREDIENT PAGE ==================== -->
+<div id="find-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">🔍 Find by Ingredients</h1>
+      <p class="hero-sub">Discover recipes based on ingredients you have</p>
+    </div>
+  </div>
+  <div class="form-box">
+    <input type="text" id="ingredientSearchPage" placeholder="🔎 e.g., cheese, paneer, chicken">
+    <button onclick="addIngredientFilterPage()">➕ Add Ingredient</button>
+    <button class="clear-btn" onclick="clearAllFiltersPage()">🗑️ Clear Filters</button>
+    <div id="activeFiltersPage" style="margin-top: 12px;"></div>
+  </div>
+  <div id="ingredientResultsPage" class="container"></div>
+</div>
+
+<!-- ==================== REVIEWS PAGE ==================== -->
+<div id="review-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">⭐ Foodie Reviews</h1>
+      <p class="hero-sub">What food lovers are saying</p>
+    </div>
+  </div>
+  <div class="form-box">
+    <input type="text" id="reviewerNamePage" placeholder="👤 Your name">
+    <textarea id="reviewCommentPage" rows="3" placeholder="💬 Share your experience..."></textarea>
+    <button onclick="addReviewFromPage()">📝 Submit Review</button>
+  </div>
+  <div id="reviewsListPage" class="container"></div>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="about-page" class="page">
+  <div class="hero">
+    <div class="hero-box">
+      <h1 class="hero-title">📖 About Us</h1>
+      <p class="hero-sub">Meet the developers of Craving & Creation</p>
+    </div>
+  </div>
+  
+  <div class="about-container">
+    <!-- Student 1 -->
+    <div class="team-grid">
+      <div class="team-card">
+        <h3>Harman Choudhary</h3>
+        <div class="info-row">
+          <span class="info-label">📚 University ID:</span>
+          <span class="info-value">2511981095</span>
+        </div>
+       
+        </div>
+      </div>
+      
+      <!-- Student 2 -->
+      <div class="team-card">
+        <h3>Mannat Chandel</h3>
+        <div class="info-row">
+          <span class="info-label">📚 University ID:</span>
+          <span class="info-value">2511981150</span>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search Results Modal/Section -->
+<div id="searchResultsSection" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 80px 20px;">
+  <button onclick="closeSearchResults()" style="position: fixed; top: 20px; right: 30px; background: #ff7e5f; font-size: 1.5rem; padding: 10px 20px; z-index: 2001;">✖ Close</button>
+  <div class="section-heading"><h1 style="color: white;">🔍 Search Results</h1></div>
+  <div id="searchResultsContainer" class="container"></div>
+</div>
+
+<footer>
+  <p>© 2026 Craving & Creation | Created with ❤️ by Harman Choudhary & Mannat Chandel | Use search bar to find any recipe | Flip cards for details</p>
+</footer>
+
+<script>
+  // ========== RECIPE DATABASE (ALL YOUR RECIPES INTACT) ==========
+  let recipes = [
+    { id: 0, name: "Paneer Butter Masala", category: "Indian", image: "https://img.freepik.com/premium-photo/delicious-paneer-butter-masala-photography_928503-851.jpg?w=2000", ingredients: ["paneer cubes", "butter", "fenugreek leaves", "tomato gravy"], prep: "40 min", steps: "Make rich tomato gravy, add paneer, finish with butter & cream." },
+    { id: 1, name: "Dal Tadka", category: "Indian", image: "https://spicecravings.com/wp-content/uploads/2021/05/Dal-Tadka-Featured.jpg", ingredients: ["yellow lentils", "spices", "ghee", "garlic"], prep: "35 min", steps: "Cook lentils, temper with ghee and spices, garnish with coriander." },
+    { id: 2, name: "Butter Chicken", category: "Indian", image: "https://www.licious.in/blog/wp-content/uploads/2020/10/butter-chicken-.jpg", ingredients: ["chicken thighs", "butter", "tomato puree", "cream"], prep: "45 min", steps: "Marinate chicken, simmer in buttery tomato gravy." },
+    { id: 3, name: "Biryani", category: "Indian", image: "https://www.sidechef.com/recipe/f2a39578-450f-4077-8c5c-3790415d3d0c.jpeg?d=1408x1120", ingredients: ["basmati rice", "chicken", "spices", "saffron"], prep: "60 min", steps: "Layer spiced rice & meat, slow cook (dum style)." },
+    { id: 4, name: "Cheeseburger", category: "Fast Food", image: "https://www.kitchensanctuary.com/wp-content/uploads/2021/05/Double-Cheeseburger-tall1-44.webp", ingredients: ["burger bun", "cheese", "tomato", "beef patty"], prep: "20 min", steps: "Grill patty, add cheese, assemble with sauce." },
+    { id: 5, name: "Pepperoni Pizza", category: "Fast Food", image: "https://cdn.shopify.com/s/files/1/0567/1213/4726/products/ThreeCheese_Pizza_Beauty_d3eeea98-1706-4092-8171-60738ac55937_1200x1200.jpg?v=1658703750", ingredients: ["pizza dough", "tomato sauce", "cheese", "pepperoni"], prep: "25 min", steps: "Top dough with sauce, cheese, pepperoni; bake until crispy." },
+    { id: 6, name: "French Fries", category: "Fast Food", image: "https://wallpapercave.com/wp/wp2148252.jpg", ingredients: ["potatoes", "vegetable oil", "salt"], prep: "15 min", steps: "Cut, soak, fry twice until golden, salt." },
+    { id: 7, name: "Hot Dog", category: "Fast Food", image: "https://thriftyveggiemama.com/wp-content/uploads/2024/11/michigan-hot-dog-recipe-1730811885.jpg", ingredients: ["sausage", "hot dog bun", "mustard", "ketchup"], prep: "15 min", steps: "Cook sausage, place in bun, top with mustard & ketchup." },
+    { id: 8, name: "Chocolate Brownie", category: "Dessert", image: "https://www.cookingclassy.com/wp-content/uploads/2019/05/brownies-21.jpg", ingredients: ["dark chocolate", "butter", "flour", "eggs"], prep: "30 min", steps: "Melt chocolate, mix batter, bake until fudgy." },
+    { id: 9, name: "Ice Cream Sundae", category: "Dessert", image: "https://cdn.britannica.com/50/80550-050-5D392AC7/Scoops-kinds-ice-cream.jpg", ingredients: ["vanilla ice cream", "chocolate sauce", "cherries"], prep: "10 min", steps: "Scoop ice cream, drizzle sauce, top with cherry." },
+    { id: 10, name: "Gulab Jamun", category: "Dessert", image: "https://northshore.noveltysweets.co.nz/wp-content/uploads/2024/10/Gulab-Jamun-1.jpg", ingredients: ["khoya", "flour", "sugar syrup"], prep: "40 min", steps: "Make dough balls, deep fry, soak in sugar syrup." },
+    { id: 11, name: "Fruit Custard", category: "Dessert", image: "https://vismaifood.com/storage/app/uploads/public/736/8b7/c2d/thumb__1200_0_0_0_auto.jpg", ingredients: ["milk", "custard powder", "seasonal fruits"], prep: "25 min", steps: "Boil milk, add custard, chill and add fresh fruits." }
+  ];
+
+  // ========== SEARCH FUNCTIONALITY ==========
+  function searchRecipes() {
+    const searchTerm = document.getElementById("navSearchInput").value.trim().toLowerCase();
+    if(searchTerm === "") {
+      alert("🔍 Please enter a recipe name to search!");
+      return;
+    }
+    
+    const matchedRecipes = recipes.filter(recipe => 
+      recipe.name.toLowerCase().includes(searchTerm)
+    );
+    
+    const searchResultsDiv = document.getElementById("searchResultsContainer");
+    const searchSection = document.getElementById("searchResultsSection");
+    
+    if(matchedRecipes.length === 0) {
+      searchResultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:40px; color:white; font-size:1.5rem;">😕 No recipes found matching "${escapeHtml(searchTerm)}"</div>`;
+    } else {
+      searchResultsDiv.innerHTML = matchedRecipes.map(recipe => createFlipCard(recipe)).join("");
+      attachFlipEventsToResults();
+    }
+    
+    searchSection.style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
+  
+  function closeSearchResults() {
+    document.getElementById("searchResultsSection").style.display = "none";
+    document.body.style.overflow = "auto";
+    document.getElementById("navSearchInput").value = "";
+  }
+  
+  function clearSearch() {
+    document.getElementById("navSearchInput").value = "";
+  }
+  
+  function attachFlipEventsToResults() {
+    document.querySelectorAll("#searchResultsContainer .card").forEach(card => {
+      card.removeEventListener("click", flipHandler);
+      card.addEventListener("click", flipHandler);
+    });
+  }
+
+  // ========== FAVORITES SYSTEM ==========
+  let favorites = JSON.parse(localStorage.getItem("cravingFavsComplete")) || [];
+  function saveFavs() { localStorage.setItem("cravingFavsComplete", JSON.stringify(favorites)); }
+  function isFav(id) { return favorites.includes(id); }
+
+  function toggleFavorite(recipeId) {
+    if (favorites.includes(recipeId)) {
+      favorites = favorites.filter(id => id !== recipeId);
+    } else {
+      favorites.push(recipeId);
+    }
+    saveFavs();
+    renderAllSections();
+    renderIngredientResults();
+    renderIngredientResultsPage();
+  }
+
+  function escapeHtml(str) { 
+    if(!str) return ''; 
+    return str.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  function createFlipCard(recipe) {
+    const favStatus = isFav(recipe.id);
+    const favText = favStatus ? "❤️ Remove from Fav" : "🤍 Add to Fav";
+    return `
+      <div class="card" data-id="${recipe.id}">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="${recipe.image}" alt="${recipe.name}" onerror="this.src='https://placehold.co/400x300?text=Yummy+${recipe.name}'">
+          </div>
+          <div class="card-back">
+            <h3>${escapeHtml(recipe.name)}</h3>
+            <p><strong>⏱️ Prep:</strong> ${recipe.prep}</p>
+            <p><strong>🥣 Ingredients:</strong></p>
+            <ul class="ingredients">
+              ${recipe.ingredients.map(ing => `<li>✓ ${escapeHtml(ing)}</li>`).join("")}
+            </ul>
+            <p><strong>📌 Steps:</strong></p>
+            <p class="steps">${escapeHtml(recipe.steps)}</p>
+            <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite(${recipe.id})">${favText}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function attachFlipEvents(containerId) {
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.querySelectorAll(".card").forEach(card => {
+      card.removeEventListener("click", flipHandler);
+      card.addEventListener("click", flipHandler);
+    });
+  }
+  
+  function flipHandler(e) { 
+    if(e.target.classList && (e.target.classList.contains("fav-btn") || e.target.closest(".fav-btn"))) return; 
+    this.classList.toggle("flipped"); 
+  }
+  
+  // ========== RENDER ALL SECTIONS ==========
+  function renderAllSections() {
+    // Home - All Recipes
+    const allDiv = document.getElementById("allRecipesHome");
+    if(allDiv) {
+      allDiv.innerHTML = recipes.map(r => createFlipCard(r)).join("");
+      attachFlipEvents("allRecipesHome");
+    }
+    
+    // Home - Indian
+    const indianDiv = document.getElementById("indianContainer");
+    if(indianDiv) {
+      indianDiv.innerHTML = recipes.filter(r => r.category === "Indian").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("indianContainer");
+    }
+    
+    // Home - Fast Food
+    const fastDiv = document.getElementById("fastContainer");
+    if(fastDiv) {
+      fastDiv.innerHTML = recipes.filter(r => r.category === "Fast Food").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("fastContainer");
+    }
+    
+    // Home - Dessert
+    const dessertDiv = document.getElementById("dessertContainer");
+    if(dessertDiv) {
+      dessertDiv.innerHTML = recipes.filter(r => r.category === "Dessert").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("dessertContainer");
+    }
+    
+    // Home - Favorites
+    const favDiv = document.getElementById("homeFavContainer");
+    if(favDiv) {
+      const favRecipes = recipes.filter(r => favorites.includes(r.id));
+      if(favRecipes.length === 0) {
+        favDiv.innerHTML = `<div style="width:100%; text-align:center; padding:40px;">💖 No favorites yet. Click "Add to Fav" on any recipe card above to see them here!</div>`;
+      } else {
+        favDiv.innerHTML = favRecipes.map(r => createFlipCard(r)).join("");
+        attachFlipEvents("homeFavContainer");
+      }
+    }
+    
+    // Indian Page
+    const indianDetailed = document.getElementById("indianDetailedContainer");
+    if(indianDetailed) {
+      indianDetailed.innerHTML = recipes.filter(r => r.category === "Indian").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("indianDetailedContainer");
+    }
+    
+    // Fast Food Page
+    const fastDetailed = document.getElementById("fastDetailedContainer");
+    if(fastDetailed) {
+      fastDetailed.innerHTML = recipes.filter(r => r.category === "Fast Food").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("fastDetailedContainer");
+    }
+    
+    // Dessert Page
+    const dessertDetailed = document.getElementById("dessertDetailedContainer");
+    if(dessertDetailed) {
+      dessertDetailed.innerHTML = recipes.filter(r => r.category === "Dessert").map(r => createFlipCard(r)).join("");
+      attachFlipEvents("dessertDetailedContainer");
+    }
+    
+    // Favorites Page
+    const favPage = document.getElementById("favPageContainer");
+    if(favPage) {
+      const favRecipes = recipes.filter(r => favorites.includes(r.id));
+      if(favRecipes.length === 0) {
+        favPage.innerHTML = `<div style="width:100%; text-align:center; padding:40px;">💖 No favorites yet. Click "Add to Fav" on any recipe to build your collection!</div>`;
+      } else {
+        favPage.innerHTML = favRecipes.map(r => createFlipCard(r)).join("");
+        attachFlipEvents("favPageContainer");
+      }
+    }
+  }
+
+  // ========== ADD RECIPE (Home Page) ==========
+  function addNewRecipe() {
+    const name = document.getElementById("recipeName").value.trim();
+    const category = document.getElementById("recipeCategory").value.trim();
+    const ingredientsRaw = document.getElementById("recipeIngredients").value.trim();
+    const imageUrl = document.getElementById("recipeImage").value.trim();
+    const steps = document.getElementById("recipeSteps").value.trim();
+    
+    if(!name || !category || !ingredientsRaw) {
+      alert("❌ Please fill Name, Category and Ingredients!");
+      return;
+    }
+    if(!["Indian","Fast Food","Dessert"].includes(category)) {
+      alert("❌ Category must be exactly: Indian, Fast Food, or Dessert");
+      return;
+    }
+    
+    const newId = Date.now();
+    const newRecipe = {
+      id: newId,
+      name: name,
+      category: category,
+      image: imageUrl || "https://placehold.co/400x300?text=New+Recipe",
+      ingredients: ingredientsRaw.split(",").map(i => i.trim()),
+      prep: "Custom",
+      steps: steps || "Enjoy this homemade creation!"
+    };
+    recipes.push(newRecipe);
+    renderAllSections();
+    renderIngredientResults();
+    renderIngredientResultsPage();
+    clearAddForm();
+    alert(`✅ "${name}" added successfully!`);
+  }
+  
+  function clearAddForm() {
+    document.getElementById("recipeName").value = "";
+    document.getElementById("recipeCategory").value = "";
+    document.getElementById("recipeIngredients").value = "";
+    document.getElementById("recipeImage").value = "";
+    document.getElementById("recipeSteps").value = "";
+  }
+
+  // ========== ADD RECIPE (Add Page) ==========
+  function addNewRecipeFromPage() {
+    const name = document.getElementById("recipeNameAdd").value.trim();
+    const category = document.getElementById("recipeCategoryAdd").value.trim();
+    const ingredientsRaw = document.getElementById("recipeIngredientsAdd").value.trim();
+    const imageUrl = document.getElementById("recipeImageAdd").value.trim();
+    const steps = document.getElementById("recipeStepsAdd").value.trim();
+    
+    if(!name || !category || !ingredientsRaw) {
+      alert("❌ Please fill Name, Category and Ingredients!");
+      return;
+    }
+    if(!["Indian","Fast Food","Dessert"].includes(category)) {
+      alert("❌ Category must be exactly: Indian, Fast Food, or Dessert");
+      return;
+    }
+    
+    const newId = Date.now();
+    const newRecipe = {
+      id: newId,
+      name: name,
+      category: category,
+      image: imageUrl || "https://placehold.co/400x300?text=New+Recipe",
+      ingredients: ingredientsRaw.split(",").map(i => i.trim()),
+      prep: "Custom",
+      steps: steps || "Enjoy this homemade creation!"
+    };
+    recipes.push(newRecipe);
+    renderAllSections();
+    renderIngredientResults();
+    renderIngredientResultsPage();
+    clearAddFormPage();
+    alert(`✅ "${name}" added successfully!`);
+  }
+  
+  function clearAddFormPage() {
+    document.getElementById("recipeNameAdd").value = "";
+    document.getElementById("recipeCategoryAdd").value = "";
+    document.getElementById("recipeIngredientsAdd").value = "";
+    document.getElementById("recipeImageAdd").value = "";
+    document.getElementById("recipeStepsAdd").value = "";
+  }
+
+  // ========== FIND BY INGREDIENTS (Home) ==========
+  let activeIngredientFilters = [];
+  
+  function addIngredientFilter() {
+    let ingVal = document.getElementById("ingredientSearch").value.trim().toLowerCase();
+    if(!ingVal) return;
+    if(!activeIngredientFilters.includes(ingVal)) {
+      activeIngredientFilters.push(ingVal);
+    }
+    document.getElementById("ingredientSearch").value = "";
+    updateFilterUI();
+    renderIngredientResults();
+  }
+  
+  function clearAllFilters() {
+    activeIngredientFilters = [];
+    updateFilterUI();
+    const resultsDiv = document.getElementById("ingredientResultsGlobal");
+    if(resultsDiv) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">✨ Add ingredients above to find matching recipes.</div>`;
+    }
+  }
+  
+  function updateFilterUI() {
+    const filterDiv = document.getElementById("activeFiltersGlobal");
+    if(!filterDiv) return;
+    if(activeIngredientFilters.length === 0) {
+      filterDiv.innerHTML = `<span>🔍 Add ingredients like "cheese", "paneer", "chicken"</span>`;
+    } else {
+      filterDiv.innerHTML = `<strong>Active ingredients:</strong> ${activeIngredientFilters.map(f => `<span class="filter-badge">${f}</span>`).join(" ")} 
+      <button onclick="clearAllFilters()" style="background:#555; padding:5px 12px; margin-top:10px;">Clear All</button>`;
+    }
+  }
+  
+  function renderIngredientResults() {
+    const resultsDiv = document.getElementById("ingredientResultsGlobal");
+    if(!resultsDiv) return;
+    if(activeIngredientFilters.length === 0) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">🍅 Type an ingredient and click 'Add Ingredient' to discover recipes.</div>`;
+      return;
+    }
+    const matched = recipes.filter(recipe => {
+      return activeIngredientFilters.every(filter =>
+        recipe.ingredients.some(ing => ing.toLowerCase().includes(filter))
+      );
+    });
+    if(matched.length === 0) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">😕 No recipes contain all selected ingredients. Try different combo!</div>`;
+      return;
+    }
+    resultsDiv.innerHTML = matched.map(recipe => createFlipCard(recipe)).join("");
+    attachFlipEvents("ingredientResultsGlobal");
+  }
+
+  // ========== FIND BY INGREDIENTS (Find Page) ==========
+  let activeIngredientFiltersPage = [];
+  
+  function addIngredientFilterPage() {
+    let ingVal = document.getElementById("ingredientSearchPage").value.trim().toLowerCase();
+    if(!ingVal) return;
+    if(!activeIngredientFiltersPage.includes(ingVal)) {
+      activeIngredientFiltersPage.push(ingVal);
+    }
+    document.getElementById("ingredientSearchPage").value = "";
+    updateFilterUIPage();
+    renderIngredientResultsPage();
+  }
+  
+  function clearAllFiltersPage() {
+    activeIngredientFiltersPage = [];
+    updateFilterUIPage();
+    const resultsDiv = document.getElementById("ingredientResultsPage");
+    if(resultsDiv) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">✨ Add ingredients above to find matching recipes.</div>`;
+    }
+  }
+  
+  function updateFilterUIPage() {
+    const filterDiv = document.getElementById("activeFiltersPage");
+    if(!filterDiv) return;
+    if(activeIngredientFiltersPage.length === 0) {
+      filterDiv.innerHTML = `<span>🔍 Add ingredients like "cheese", "paneer", "chicken"</span>`;
+    } else {
+      filterDiv.innerHTML = `<strong>Active ingredients:</strong> ${activeIngredientFiltersPage.map(f => `<span class="filter-badge">${f}</span>`).join(" ")} 
+      <button onclick="clearAllFiltersPage()" style="background:#555; padding:5px 12px; margin-top:10px;">Clear All</button>`;
+    }
+  }
+  
+  function renderIngredientResultsPage() {
+    const resultsDiv = document.getElementById("ingredientResultsPage");
+    if(!resultsDiv) return;
+    if(activeIngredientFiltersPage.length === 0) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">🍅 Type an ingredient and click 'Add Ingredient' to discover recipes.</div>`;
+      return;
+    }
+    const matched = recipes.filter(recipe => {
+      return activeIngredientFiltersPage.every(filter =>
+        recipe.ingredients.some(ing => ing.toLowerCase().includes(filter))
+      );
+    });
+    if(matched.length === 0) {
+      resultsDiv.innerHTML = `<div style="width:100%; text-align:center; padding:30px;">😕 No recipes contain all selected ingredients. Try different combo!</div>`;
+      return;
+    }
+    resultsDiv.innerHTML = matched.map(recipe => createFlipCard(recipe)).join("");
+    attachFlipEvents("ingredientResultsPage");
+  }
+
+  // ========== REVIEWS SYSTEM ==========
+  let reviews = JSON.parse(localStorage.getItem("foodieReviewsComplete")) || [];
+  function saveReviews() { localStorage.setItem("foodieReviewsComplete", JSON.stringify(reviews)); }
+  
+  function addReview() {
+    const name = document.getElementById("reviewerName").value.trim();
+    const comment = document.getElementById("reviewComment").value.trim();
+    if(!name || !comment) {
+      alert("❌ Please enter your name and a review!");
+      return;
+    }
+    reviews.unshift({ name: name, text: comment, date: new Date().toLocaleDateString() });
+    saveReviews();
+    renderReviews();
+    document.getElementById("reviewerName").value = "";
+    document.getElementById("reviewComment").value = "";
+    alert("✅ Review submitted successfully!");
+  }
+  
+  function addReviewFromPage() {
+    const name = document.getElementById("reviewerNamePage").value.trim();
+    const comment = document.getElementById("reviewCommentPage").value.trim();
+    if(!name || !comment) {
+      alert("❌ Please enter your name and a review!");
+      return;
+    }
+    reviews.unshift({ name: name, text: comment, date: new Date().toLocaleDateString() });
+    saveReviews();
+    renderReviewsPage();
+    document.getElementById("reviewerNamePage").value = "";
+    document.getElementById("reviewCommentPage").value = "";
+    alert("✅ Review submitted successfully!");
+  }
+  
+  function renderReviews() {
+    const reviewContainer = document.getElementById("reviewsListGlobal");
+    if(!reviewContainer) return;
+    if(reviews.length === 0) {
+      reviewContainer.innerHTML = `<div style="width:100%; text-align:center; padding:20px;">💬 No reviews yet. Be the first to share your foodie thoughts!</div>`;
+      return;
+    }
+    reviewContainer.innerHTML = reviews.map(rev => `
+      <div class="review-card">
+        <h4>⭐ ${escapeHtml(rev.name)}</h4>
+        <p>“${escapeHtml(rev.text)}”</p>
+        <small>📅 ${rev.date}</small>
+      </div>
+    `).join("");
+  }
+  
+  function renderReviewsPage() {
+    const reviewContainer = document.getElementById("reviewsListPage");
+    if(!reviewContainer) return;
+    if(reviews.length === 0) {
+      reviewContainer.innerHTML = `<div style="width:100%; text-align:center; padding:20px;">💬 No reviews yet. Be the first to share your foodie thoughts!</div>`;
+      return;
+    }
+    reviewContainer.innerHTML = reviews.map(rev => `
+      <div class="review-card">
+        <h4>⭐ ${escapeHtml(rev.name)}</h4>
+        <p>“${escapeHtml(rev.text)}”</p>
+        <small>📅 ${rev.date}</small>
+      </div>
+    `).join("");
+  }
+
+  // ========== PAGE SWITCHING ==========
+  function switchPage(pageName) {
+    const pages = ['home', 'indian', 'fast', 'dessert', 'favorites', 'add', 'find', 'review', 'about'];
+    pages.forEach(page => {
+      const el = document.getElementById(`${page}-page`);
+      if(el) el.classList.remove('active-page');
+    });
+    
+    const activePage = document.getElementById(`${pageName}-page`);
+    if(activePage) activePage.classList.add('active-page');
+    
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+    
+    const pageMap = { 
+      home:'Home', indian:'Indian', fast:'Fast', dessert:'Dessert', 
+      favorites:'Favorites', add:'Add', find:'Find', review:'Reviews', about:'About'
+    };
+    for(let btn of document.querySelectorAll('.nav-btn')) {
+      if(btn.textContent.includes(pageMap[pageName])) {
+        btn.classList.add('active-nav');
+        break;
+      }
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ========== INITIALIZATION ==========
+  function init() {
+    renderAllSections();
+    renderReviews();
+    renderReviewsPage();
+    renderIngredientResults();
+    renderIngredientResultsPage();
+  }
+  
+  // Make functions globally available
+  window.switchPage = switchPage;
+  window.toggleFavorite = toggleFavorite;
+  window.addNewRecipe = addNewRecipe;
+  window.clearAddForm = clearAddForm;
+  window.addNewRecipeFromPage = addNewRecipeFromPage;
+  window.clearAddFormPage = clearAddFormPage;
+  window.addIngredientFilter = addIngredientFilter;
+  window.clearAllFilters = clearAllFilters;
+  window.addIngredientFilterPage = addIngredientFilterPage;
+  window.clearAllFiltersPage = clearAllFiltersPage;
+  window.addReview = addReview;
+  window.addReviewFromPage = addReviewFromPage;
+  window.searchRecipes = searchRecipes;
+  window.closeSearchResults = closeSearchResults;
+  window.clearSearch = clearSearch;
+  
+  init();
+</script>
+</body>
+</html>
